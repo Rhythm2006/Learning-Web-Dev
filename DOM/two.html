@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="myBox">
+    <h1>TODO list</h1>  
+    </div>
+    <div>
+        <input type="text" id="typetext">
+        <button onclick="addTodo()">Add Todo</button>
+    </div>
+    <div id = "mylist">
+
+    </div>
+</body>
+<script>
+    let count = 1
+    let todos = []
+    function todelete(index) {
+        const element = document.getElementById("todo-"+index)
+        element.parentNode.removeChild(element)
+        todos.pop(index)
+    }
+    const addTodo = ()=>{
+        const text = document.getElementById('typetext').value
+        todos.push({
+            title: text
+        })
+        render()
+        // const newdiv = document.createElement("div")
+        // newdiv.id = `todo-${count}`
+        // newdiv.innerHTML = `<h4>${value1}</h4> <button onclick="todelete(${count})">Delete</button>`
+        // const parentEl = document.querySelector("#myBox")
+        // parentEl.appendChild(newdiv)
+
+        //Instead of working with raw html, you should work with dom elements in the following way       
+    }
+
+    function render() {
+        let body = document.querySelector("#mylist")
+        body.innerHTML = ""
+        for (let i = 0; i<=todos.length;i++) {
+            const todo = todos[i]
+            const div = document.createElement("div")
+            div.id =  `todo-${i}`
+            const button = document.createElement("button")
+            button.setAttribute = button.setAttribute("onclick",`todelete(${i})`)
+            const span = document.createElement("span")
+            span.innerHTML = todo.title;
+            button.innerHTML = "Delete"
+            div.appendChild(span)
+            div.appendChild(button)
+            document.querySelector("#mylist").appendChild(div)
+        }
+    }
+</script>
+</html>

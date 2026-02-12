@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="myBox">
+    <h1>TODO list</h1>  
+    </div>
+    <div>
+        <input type="text" id="typetext">
+        <button onclick="addTodo()">Add Todo</button>
+    </div>
+</body>
+<script>
+    let count = 1
+    function todelete(index) {
+        const element = document.getElementById("todo-"+index)
+        element.parentNode.removeChild(element)
+    }
+    const addTodo = ()=>{
+        const text = document.getElementById('typetext')
+        const value1 = text.value
+        console.log(value1)
+        // const newdiv = document.createElement("div")
+        // newdiv.id = `todo-${count}`
+        // newdiv.innerHTML = `<h4>${value1}</h4> <button onclick="todelete(${count})">Delete</button>`
+        // const parentEl = document.querySelector("#myBox")
+        // parentEl.appendChild(newdiv)
+
+        //Instead of working with raw html, you should work with dom elements in the following ways
+        const newSpan = document.createElement("span")
+        newSpan.innerHTML = value1
+        const delButton = document.createElement("button")
+        delButton.innerHTML = "Delete"
+        delButton.setAttribute("onclick",`todelete(${count})`)
+        const newDiv = document.createElement("div")
+        newDiv.id = `todo-${count}` 
+        newDiv.appendChild(newSpan)
+        newDiv.appendChild(delButton)
+        document.querySelector("body").appendChild(newDiv)
+        count+=1
+    }
+</script>
+</html>

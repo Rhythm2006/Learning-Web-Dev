@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+    <script>
+    
+    async function signup(){
+        const username = document.getElementById("signup-username").value
+        const password = document.getElementById("signup-password").value
+
+        const response = await axios.post("http://localhost:3000/signup",{
+            username: username,
+            password: password
+        })
+
+        alert(response.data.message)
+
+    }
+    async function signin(){
+        const username = document.getElementById("signin-username").value
+        const password = document.getElementById("signin-password").value
+
+        const response = await axios.post("http://localhost:3000/signin",{
+            username: username,
+            password: password
+        })
+
+        if (response.status === 200) {
+            token = response.data.token
+            localStorage.setItem("token",token)
+            alert(token)
+        } else{
+            alert("Your username/password is incorrect")
+        }
+
+    }
+    function logout(){
+        localStorage.removeItem("token")
+    }
+    async function getUserInfo(){
+        const token = localStorage.getItem("token")
+        if (token) {
+        const response = await axios.get("http://localhost:3000/me",{
+            headers: {
+                token: token
+            }
+        })
+        if (response.status === 200) {
+            const userresp = response.data.user
+            document.getElementById("user").innerText = `Welcome ${userresp}`
+        } 
+        
+    } else{
+            console.log("hello")
+        }
+    }
+    getUserInfo()
+
+
+</script>
+</head>
+<body>
+    <div>
+        <label for="signup-password">Username</label>
+        <input type="text" name="Username" id="signup-username" placeholder="username">
+        <label for="signup-password">Password</label>
+        <input type="password" name="Username" id="signup-password" placeholder="password">
+    </div>
+    <div>
+        <button id="signinbutton" onclick="signup()">Sign-Up</button>
+    </div>
+    <div>
+        <label for="signin-username">Username</label>
+        <input type="text" name="Username" id="signin-username" placeholder="username">
+        <label for="signin-password">Password</label>
+        <input type="password" name="Username" id="signin-password" placeholder="password">
+    </div>
+    <div>
+        <button id="signinbutton" onclick="signin()">Sign-In</button>
+    </div>
+    <div>
+        <h1 id="user"></h1>
+    </div>
+    <div>
+        <button id="logout" onclick="logout()">Logout</button>
+    </div>
+    
+</body>
+
+</html>
