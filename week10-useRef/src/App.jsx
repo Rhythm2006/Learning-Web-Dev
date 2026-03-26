@@ -7,6 +7,8 @@ import './App.css'
 //The value of ref doesnt reset after each rerender
 //Changing the value of ref doesnt trigger a rerender
 //Some usecases 1: Focusing an input box(accessing dom elements )
+// document.getElementById = manual DOM control
+// useRef = React-friendly, safe, component-scoped control
 
 function App() {
   const inputRef = useRef();
